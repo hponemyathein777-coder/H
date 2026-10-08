@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khan Job Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: #f4f6f8;
+      padding: 20px;
+      margin: 0;
+    }
+    .calculator-card {
+      max-width: 450px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo {
+      background: #e44d26;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin: 0;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    .input-group label {
+      font-weight: 600;
+      color: #444;
+      font-size: 15px;
+      flex: 1;
+    }
+    .input-group span {
+      margin: 0 10px;
+      color: #666;
+    }
+    .input-field {
+      width: 120px;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      text-align: center;
+    }
+    .strips-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #333;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator-card">
+  <div class="header">
+    <div class="logo">K</div>
+    <h2 class="title">Khan Job Enterprise</h2>
+  </div>
+
+  <div class="input-group">
+    <label>Height</label>
+    <span>:</span>
+    <input type="number" id="height" class="input-field" value="1000" oninput="calculate()">
+  </div>
+
+  <div class="input-group">
+    <label>Hollow</label>
+    <span>:</span>
+    <input type="number" id="hollow" class="input-field" value="19" oninput="calculate()">
+  </div>
+
+  <div class="input-group">
+    <label>Long Gap</label>
+    <span>:</span>
+    <input type="number" id="longGap" class="input-field" value="100" oninput="calculate()">
+  </div>
+
+  <div class="input-group">
+    <label>Short Gap</label>
+    <span>:</span>
+    <input type="number" id="shortGap" class="input-field" value="90" oninput="calculate()">
+  </div>
+
+  <div class="input-group">
+    <label>Strips</label>
+    <span>:</span>
+    <div class="strips-control">
+      <input type="number" id="strips" class="input-field" value="8" style="width: 60px;" oninput="calculate()">
+      <button class="btn-circle" onclick="changeStrips(1)">+</button>
+      <button class="btn-circle" onclick="changeStrips(-1)">-</button>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label>Gap</label>
+    <span>:</span>
+    <input type="text" id="gap" class="input-field" readonly style="background: #f9f9f9;">
+  </div>
+</div>
+
+<script>
+  function calculate() {
+    const height = parseFloat(document.getElementById('height').value) || 0;
+    const hollow = parseFloat(document.getElementById('hollow').value) || 0;
+    const longGap = parseFloat(document.getElementById('longGap').value) || 0;
+    const shortGap = parseFloat(document.getElementById('shortGap').value) || 0;
+    const strips = parseFloat(document.getElementById('strips').value) || 0;
+
+    if (strips > 0) {
+      const remainingSpace = height - (hollow * strips) - longGap - shortGap;
+      const gapResult = remainingSpace / (strips - 1);
+      document.getElementById('gap').value = gapResult.toFixed(2);
+    } else {
+      document.getElementById('gap').value = "0";
+    }
+  }
+
+  function changeStrips(val) {
+    const stripsInput = document.getElementById('strips');
+    let currentVal = parseInt(stripsInput.value) || 0;
+    currentVal += val;
+    if (currentVal < 1) currentVal = 1;
+    stripsInput.value = currentVal;
+    calculate();
+  }
+
+  calculate();
+</script>
+
+</body>
+</html>
